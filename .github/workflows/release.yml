@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Java Maven release
-      uses: qcastel/github-actions-maven-release@v1.12.12
+      uses: qcastel/github-actions-maven-release@v1.12.15
       env:
         JAVA_HOME: /usr/lib/jvm/java-11-openjdk/
       with:
