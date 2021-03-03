@@ -17,7 +17,7 @@ on:
         default: "false"
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
     - name: Java Maven release
