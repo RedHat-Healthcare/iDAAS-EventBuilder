@@ -26,7 +26,6 @@ jobs:
         JAVA_HOME: /usr/lib/jvm/java-11-openjdk/
       with:
         access-token: ${{ secrets.GITHUB_TOKEN }}
-        release-branch-name: "${{ github.event.inputs.branch }}"
         version-major: ${{ github.event.inputs.increment-major }}
         version-minor: ${{ github.event.inputs.increment-minor }}
         gpg-enabled: "true"
