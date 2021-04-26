@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 /*
@@ -17,6 +19,14 @@ import java.util.UUID;
 public class FHIRStreamParser {
 
     private static final Logger LOG = LoggerFactory.getLogger(FHIRStreamParser.class);
+
+        public ArrayList returnFHIRData (String body)
+        {
+            Gson gson = new Gson();
+            ArrayList mcArray = new ArrayList();
+            //mcArray= gson.fromJson(body, MyClass[].class);
+            return mcArray;
+        }
 
         public RoutingEvent buildRoutingEvent (String body){
             RoutingEvent routingEvent = new RoutingEvent();
