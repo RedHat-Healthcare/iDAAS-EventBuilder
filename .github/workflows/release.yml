@@ -35,40 +35,15 @@ jobs:
         rm ./private.key
         echo "List of keys:"
         gpg --list-secret-keys --keyid-format LONG
-    - name: Install settings.xml
-      env:
-        NEXUS_USER: ${{ secrets.NEXUS_USER }}
-        NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-        GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-        GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
-      run: |
-        mkdir ~/.m2
-        echo "<settings>" > ~/.m2/settings.xml
-        echo "  <profiles>" >> ~/.m2/settings.xml
-        echo "    <profile>" >> ~/.m2/settings.xml
-        echo "      <id>ossrh</id>" >> ~/.m2/settings.xml
-        echo "      <activation>" >> ~/.m2/settings.xml
-        echo "        <activeByDefault>true</activeByDefault>" >> ~/.m2/settings.xml
-        echo "      </activation>" >> ~/.m2/settings.xml
-        echo "      <properties>" >> ~/.m2/settings.xml
-        echo "  <gpg.keyname>${GPG_KEY_ID}</gpg.keyname>" >> ~/.m2/settings.xml
-        echo "        <gpg.executable>gpg2</gpg.executable>" >> ~/.m2/settings.xml
-        echo "        <gpg.passphrase>${GPG_PASSPHRASE}</gpg.passphrase>" >> ~/.m2/settings.xml
-        echo "      </properties>" >> ~/.m2/settings.xml
-        echo "    </profile>" >> ~/.m2/settings.xml
-        echo "  </profiles>" >> ~/.m2/settings.xml
-        echo "  <servers>" >> ~/.m2/settings.xml
-        echo "   <server>" >> ~/.m2/settings.xml
-        echo "      <id>ossrh</id>" >> ~/.m2/settings.xml
-        echo "      <username>${NEXUS_USER}</username>" >> ~/.m2/settings.xml
-        echo "      <password>${NEXUS_PASSWORD}</password>" >> ~/.m2/settings.xml
-        echo "    </server>" >> ~/.m2/settings.xml
-        echo " </servers>" >> ~/.m2/settings.xml
-        echo "</settings>" >> ~/.m2/settings.xml
     - name: Java Maven release
       uses: qcastel/github-actions-maven-release@v1.12.16
       env:
         JAVA_HOME: /usr/lib/jvm/java-11-openjdk/
+        MAVEN_REPO_SERVER_ID: ossrh
+        MAVEN_REPO_SERVER_USERNAME: ${{ secrets.NEXUS_USER }}
+        MAVEN_REPO_SERVER_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+        GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+        GPG_PASSPHRASE: ${{ GPG_PASSPHRASE }}
       with:
         release-branch-name: "${{ github.event.inputs.branch }}"
         access-token: ${{ secrets.GITHUB_TOKEN }}
@@ -78,7 +53,7 @@ jobs:
         gpg-key-id: ${{ secrets.GPG_KEY_ID }}
         gpg-key: ${{ secrets.GPG_KEY }}
         gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }} 
-        maven-options: "-Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}"
+        maven-options: "-s .github/workflows/settings.xml -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}"
         maven-args: "-Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}"
         maven-repo-server-id: ossrh
         maven-repo-server-username: ${{ secrets.NEXUS_USER }}
