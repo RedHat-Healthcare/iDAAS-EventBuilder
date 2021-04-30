@@ -43,7 +43,7 @@ jobs:
         MAVEN_REPO_SERVER_USERNAME: ${{ secrets.NEXUS_USER }}
         MAVEN_REPO_SERVER_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
         GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
-        GPG_PASSPHRASE: ${{ GPG_PASSPHRASE }}
+        GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       with:
         release-branch-name: "${{ github.event.inputs.branch }}"
         access-token: ${{ secrets.GITHUB_TOKEN }}
