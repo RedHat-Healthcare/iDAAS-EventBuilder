@@ -53,9 +53,8 @@ jobs:
         gpg-key-id: ${{ secrets.GPG_KEY_ID }}
         gpg-key: ${{ secrets.GPG_KEY }}
         gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }} 
-        maven-options: "-s .github/workflows/settings.xml -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}"
+        maven-options: "-s /github/workspace/.github/workflows/settings.xml -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}"
         maven-args: "-Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}"
         maven-repo-server-id: ossrh
         maven-repo-server-username: ${{ secrets.NEXUS_USER }}
         maven-repo-server-password: ${{ secrets.NEXUS_PASSWORD }}
-        m2-home-folder: ~/.m2
