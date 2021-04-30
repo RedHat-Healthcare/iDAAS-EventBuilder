@@ -42,6 +42,7 @@ jobs:
         GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
       run: |
+        mkdir ~/.m2
         echo "<settings>" > ~/.m2/settings.xml
         echo "  <profiles>" >> ~/.m2/settings.xml
         echo "    <profile>" >> ~/.m2/settings.xml
