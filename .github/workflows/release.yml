@@ -23,6 +23,18 @@ jobs:
     - uses: actions/checkout@v2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Install GPG Key
+      env:
+        GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+        GPG_KEY: ${{ secrets.GPG_KEY }}
+      run: |
+        echo "GPG_KEY_ID = $GPG_KEY_ID"
+        echo "Import the GPG key"
+        echo  "$GPG_KEY" | base64 -d > private.key
+        gpg --batch --import ./private.key
+        rm ./private.key
+        echo "List of keys:"
+        gpg --list-secret-keys --keyid-format LONG
     - name: Java Maven release
       uses: qcastel/github-actions-maven-release@v1.12.16
       env:
