@@ -32,7 +32,7 @@ jobs:
         access-token: ${{ secrets.GITHUB_TOKEN }}
         version-major: ${{ github.event.inputs.increment-major }}
         version-minor: ${{ github.event.inputs.increment-minor }}
-        gpg-enabled: "true"
+        gpg-enabled: "false"
         gpg-key-id: ${{ secrets.GPG_KEY_ID }}
         gpg-key: ${{ secrets.GPG_KEY }}
         gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }} 
