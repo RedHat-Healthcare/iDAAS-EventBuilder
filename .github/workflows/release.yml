@@ -21,8 +21,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
     - name: Java Maven release
-      uses: qcastel/github-actions-maven-release@v1.12.15
+      uses: qcastel/github-actions-maven-release@v1.12.16
       env:
         JAVA_HOME: /usr/lib/jvm/java-11-openjdk/
       with:
@@ -35,6 +37,7 @@ jobs:
         gpg-key: ${{ secrets.GPG_KEY }}
         gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }} 
         maven-options: "-Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}"
+        maven-args: "-Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}"
         maven-repo-server-id: ossrh
         maven-repo-server-username: ${{ secrets.NEXUS_USER }}
         maven-repo-server-password: ${{ secrets.NEXUS_PASSWORD }}
