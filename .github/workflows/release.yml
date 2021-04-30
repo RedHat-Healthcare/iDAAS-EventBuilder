@@ -42,7 +42,7 @@ jobs:
         GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
       run: |
-        mkdir -p /root/.m2
+        mkdir ~/.m2
         echo "<settings>" > ~/.m2/settings.xml
         echo "  <profiles>" >> ~/.m2/settings.xml
         echo "    <profile>" >> ~/.m2/settings.xml
@@ -83,3 +83,4 @@ jobs:
         maven-repo-server-id: ossrh
         maven-repo-server-username: ${{ secrets.NEXUS_USER }}
         maven-repo-server-password: ${{ secrets.NEXUS_PASSWORD }}
+        m2-home-folder: ~/.m2
