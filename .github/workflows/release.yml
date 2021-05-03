@@ -28,6 +28,7 @@ jobs:
         GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
         GPG_KEY: ${{ secrets.GPG_KEY }}
       run: |
+        mkdir -p /github/home/.gnupg
         echo "GPG_KEY_ID = $GPG_KEY_ID"
         echo "Import the GPG key"
         echo  "$GPG_KEY" | base64 -d > private.key
