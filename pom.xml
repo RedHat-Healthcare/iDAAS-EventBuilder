@@ -4,7 +4,7 @@
 
 	<groupId>io.connectedhealth-idaas</groupId>
 	<artifactId>idaas-eventbuilder</artifactId>
-	<version>1.9-SNAPSHOT</version>
+	<version>1.10-SNAPSHOT</version>
 	<name>iDAAS Event Builder and Parser</name>
 	<description>iDAAS EventBuilder is designed to help ANY implementation build, parse and/or transform data.</description>
 	<url>http://connectedhealth-idaas.io/</url>
@@ -69,9 +69,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:https://github.com/RedHat-Healthcare/iDAAS-EventBuilder.git</connection>
-		<url>https://github.com/RedHat-Healthcare/iDAAS-EventBuilder</url>
-		<developerConnection>scm:git:https://github.com/RedHat-Healthcare/iDAAS-EventBuilder.git</developerConnection>
+		<connection>scm:git:https://github.com/RedHat-Healthcare/iDaaS-EventBuilder.git</connection>
+		<url>https://github.com/RedHat-Healthcare/iDaaS-EventBuilder</url>
+		<developerConnection>scm:git:https://github.com/RedHat-Healthcare/iDaaS-EventBuilder.git</developerConnection>
     	<tag>HEAD</tag>
   	</scm>
 	 
@@ -211,6 +211,12 @@
 								</goals>
 							</execution>
 						</executions>
+						<configuration>
+						  <gpgArguments>
+						    <gpgArgument>--pinentry-mode</gpgArgument>
+						    <gpgArgument>loopback</gpgArgument>
+						  </gpgArguments>
+						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>

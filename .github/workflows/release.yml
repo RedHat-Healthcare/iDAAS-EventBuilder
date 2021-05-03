@@ -17,22 +17,47 @@ on:
         default: "false"
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.IDAAS_ACCESS_TOKEN }}
+    - name: Install GPG Key
+      env:
+        GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+        GPG_KEY: ${{ secrets.GPG_KEY }}
+        GNUPGHOME: /home/runner/work/iDaaS-EventBuilder/iDaaS-EventBuilder/.gnupg
+      run: |
+        echo "GPG_KEY_ID = $GPG_KEY_ID"
+        echo "Import the GPG key"
+        echo  "$GPG_KEY" | base64 -d > private.key
+        gpg --batch --import ./private.key
+        rm ./private.key
+        echo "List of keys:"
+        gpg --list-secret-keys --keyid-format LONG
     - name: Java Maven release
-      uses: qcastel/github-actions-maven-release@v1.12.12
+      uses: qcastel/github-actions-maven-release@v1.12.16
       env:
         JAVA_HOME: /usr/lib/jvm/java-11-openjdk/
+        MAVEN_REPO_SERVER_ID: ossrh
+        MAVEN_REPO_SERVER_USERNAME: ${{ secrets.NEXUS_USER }}
+        MAVEN_REPO_SERVER_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+        GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+        GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        GNUPGHOME: /github/workspace/.gnupg
       with:
-        access-token: ${{ secrets.GITHUB_TOKEN }}
-        release-branch-name: ${{ github.event.inputs.branch }}
+        release-branch-name: "${{ github.event.inputs.branch }}"
+        access-token: ${{ secrets.IDAAS_ACCESS_TOKEN }}
+        git-release-bot-name: "idaas-bot"
         version-major: ${{ github.event.inputs.increment-major }}
         version-minor: ${{ github.event.inputs.increment-minor }}
-        gpg-enabled: "true"
+        gpg-enabled: "false"
         gpg-key-id: ${{ secrets.GPG_KEY_ID }}
         gpg-key: ${{ secrets.GPG_KEY }}
         gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }} 
+        maven-options: "-s /github/workspace/.github/workflows/settings.xml -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}"
+        maven-args: "-Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}"
         maven-repo-server-id: ossrh
         maven-repo-server-username: ${{ secrets.NEXUS_USER }}
         maven-repo-server-password: ${{ secrets.NEXUS_PASSWORD }}
