@@ -27,6 +27,7 @@ jobs:
       env:
         GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
         GPG_KEY: ${{ secrets.GPG_KEY }}
+        GNUPGHOME: /home/runner/work/iDaaS-EventBuilder/iDaaS-EventBuilder/.gnupg
       run: |
         echo "GPG_KEY_ID = $GPG_KEY_ID"
         echo "Import the GPG key"
@@ -44,7 +45,7 @@ jobs:
         MAVEN_REPO_SERVER_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
         GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
         GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-        GNUPGHOME: /home/runner/.gnupg
+        GNUPGHOME: /github/workspace/.gnupg
       with:
         release-branch-name: "${{ github.event.inputs.branch }}"
         access-token: ${{ secrets.GITHUB_TOKEN }}
