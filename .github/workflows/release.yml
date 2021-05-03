@@ -28,14 +28,13 @@ jobs:
         GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
         GPG_KEY: ${{ secrets.GPG_KEY }}
       run: |
-        mkdir -p /github/home/.gnupg
         echo "GPG_KEY_ID = $GPG_KEY_ID"
         echo "Import the GPG key"
         echo  "$GPG_KEY" | base64 -d > private.key
-        gpg --homedir /github/home/.gnupg --batch --import ./private.key
+        gpg --batch --import ./private.key
         rm ./private.key
         echo "List of keys:"
-        gpg --homedir /github/home/.gnupg --list-secret-keys --keyid-format LONG
+        gpg --list-secret-keys --keyid-format LONG
     - name: Java Maven release
       uses: jayfray12/github-actions-maven-release@master
       env:
@@ -45,6 +44,7 @@ jobs:
         MAVEN_REPO_SERVER_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
         GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
         GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        GNUPGHOME: /home/runner/.gnupg
       with:
         release-branch-name: "${{ github.event.inputs.branch }}"
         access-token: ${{ secrets.GITHUB_TOKEN }}
