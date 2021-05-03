@@ -22,7 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.IDAAS_ACCESS_TOKEN }}
     - name: Install GPG Key
       env:
         GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
@@ -37,7 +37,7 @@ jobs:
         echo "List of keys:"
         gpg --list-secret-keys --keyid-format LONG
     - name: Java Maven release
-      uses: jayfray12/github-actions-maven-release@master
+      uses: qcastel/github-actions-maven-release@v1.12.16
       env:
         JAVA_HOME: /usr/lib/jvm/java-11-openjdk/
         MAVEN_REPO_SERVER_ID: ossrh
@@ -48,7 +48,8 @@ jobs:
         GNUPGHOME: /github/workspace/.gnupg
       with:
         release-branch-name: "${{ github.event.inputs.branch }}"
-        access-token: ${{ secrets.GITHUB_TOKEN }}
+        access-token: ${{ secrets.IDAAS_ACCESS_TOKEN }}
+        git-release-bot-name: "idaas-bot"
         version-major: ${{ github.event.inputs.increment-major }}
         version-minor: ${{ github.event.inputs.increment-minor }}
         gpg-enabled: "false"
