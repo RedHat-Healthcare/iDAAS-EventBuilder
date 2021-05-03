@@ -31,10 +31,10 @@ jobs:
         echo "GPG_KEY_ID = $GPG_KEY_ID"
         echo "Import the GPG key"
         echo  "$GPG_KEY" | base64 -d > private.key
-        gpg --batch --import ./private.key
+        gpg --homedir /github/home/.gnupg --batch --import ./private.key
         rm ./private.key
         echo "List of keys:"
-        gpg --list-secret-keys --keyid-format LONG
+        gpg --homedir /github/home/.gnupg --list-secret-keys --keyid-format LONG
     - name: Java Maven release
       uses: jayfray12/github-actions-maven-release@master
       env:
