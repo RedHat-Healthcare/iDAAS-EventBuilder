@@ -36,7 +36,7 @@ jobs:
         echo "List of keys:"
         gpg --list-secret-keys --keyid-format LONG
     - name: Java Maven release
-      uses: qcastel/github-actions-maven-release@v1.12.16
+      uses: jayfray12/github-actions-maven-release@master
       env:
         JAVA_HOME: /usr/lib/jvm/java-11-openjdk/
         MAVEN_REPO_SERVER_ID: ossrh
